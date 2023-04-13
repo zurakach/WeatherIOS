@@ -60,6 +60,27 @@ Almost all components in this project are **Protocols**. This allows us to set u
 Currently I only implemented Interactor **Unit Tests** that use **Stub** Repositories to check if data is processed correctly.
 
 
+## Code
+
+- In SceneDelegate I set up appropriate DependencyContainer and Router. 
+For UI Testing we can provide Stub Router and Dependency Container for quick and easy testing.
+- Router provides initialViewController by setting up NavigationController with WeatherForecastViewController as it's root VC.
+Router is responsible for setting up Scene. It creates Scene's VIP elements with appropriate dependencies.
+
+- When WeatherForecastVC is presented, it starts loading procedure. 
+First it asks Interactor to load weather based on user's current location. Interactor talks with appropriate Repositories to load data. 
+If loading location weather fails, then WeatherForecastVC asks interactor to load last displayed city weather. 
+- Interactor talks with presenter to give updates about the state of loading. Presenter converts these messages to PresentationModel and gives it to WeatherForecastVC.
+- WeatherForecastVC has WeatherForecastDetailsView to display forecast. View is managed by WeatherForecastDetailsViewModel. 
+ViewModel is responsible for setting appropriate data to View. ViewModel also loads weather icon and sets it when done. 
+This is borrowed from MVVM. It allows us to decouple presentation model handling code from UI code.
+
+- City Search: WeatherForecastViewController aslo sets up SearchViewController and CitySearchResultViewController. When search is requested, it asks Interactor to do the search and when presenter gives results, 
+ results are sent to SearchResultVC. Here I could have decoupled code even more. e.g. by putting search handling in separate ViewModel.
 
 
- 
+## Notes
+- Porject struction isn't the best. Ideally I would create separate Module/Package for Data Layer. Stub and Production implementations being in same place is not ideal either.
+- For Geocoding I'm using CoreLocation's geocoding instead of OpenWeather one. After I implemented it I figured OpenWeather api would be better suited to provide multiple city suggestion. 
+This can be fixed in the future by creating a OpenWeatherGeocoderRepository and using it instead of CLGeocoderRepository.
+- Handling errors such as 'no access to location' can be done more gracefully. I can add alert messages to let user know that I need access to location and then open settings app.
