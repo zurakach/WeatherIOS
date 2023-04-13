@@ -17,7 +17,7 @@ fileprivate struct OpenWeatherResponseWeatherModel: Codable {
 
 final class OpenWeatherForcastRemoteAPI: WeatherForecastRemoteAPI {
     private let baseUrl = "https://api.openweathermap.org/data/2.5/weather"
-    private let apiKey = "63629cb9c9a57085d2ce00745bec097f"
+    private let apiKey = APIKeysWorker.openWeatherAPIKey
     
     
     func loadForecast(for city: CityModel) async throws -> CityForecastModel {

@@ -84,3 +84,9 @@ This is borrowed from MVVM. It allows us to decouple presentation model handling
 - For Geocoding I'm using CoreLocation's geocoding instead of OpenWeather one. After I implemented it I figured OpenWeather api would be better suited to provide multiple city suggestion. 
 This can be fixed in the future by creating a OpenWeatherGeocoderRepository and using it instead of CLGeocoderRepository.
 - Handling errors such as 'no access to location' can be done more gracefully. I can add alert messages to let user know that I need access to location and then open settings app.
+
+## Building the Project
+
+Project depends on APIKeys.plist file to load appropriate api keys.
+When cloning, you will need to create **APIKeys.plist** file and add "OpenWeather" key with your open weather api key.
+This ensured that private api keys are not exposed to the public.
